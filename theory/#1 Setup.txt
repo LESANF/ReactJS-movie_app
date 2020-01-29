@@ -1,0 +1,72 @@
+create-react-app은 기본적으로 하나의 명령을 실행해서 React Web App을 Set up 할 수 있게 해준다.
+
+원하는 폴더에 들어와서 npx create-react-app 폴더이름. ex) npx create-react-app movie_app_2020
+
+설치가 다되고 readme를 조금 고치고, package.json에와서 script를 주목하자. start,build만 남기고 test, eject는 없앰.
+
+이제 명령어에 npm start를해보자. 첫번째 React application 프로그램을 가지게 됨. 우리는 브라우저에서 볼 수 있게 되었고
+
+두 개의 URL을 받았음. Local과 Network. 로컬은 우리컴퓨터에있고 네트워크는 wi-fi에있는거임 wi-fi에 친구가 있거나 폰에 테스트를 하고싶을때 쓰면됨.
+
+여기까지하고 깃에올리자.
+
+폴더에 있는것을 살펴보자 우리는 3개의 폴더를 가졌음 node_module, public, src
+
+public은 favicon을 가지고 있는데, 브라우저의 맨위에 탭에있는 작은 아이콘임 그리고 index는 index임 목적에 맞게 비워져있음
+
+manifest.json은 지금 코스의 수준에서 벗어나기 때문에 넘어가자
+
+src는 많은 것을 가지고있음 하지만 기본부터 설명하기 위해 대부분을 지우자
+
+index.js로가서 아래와같은 코드를 다지움
+
+import * as serviceWorker from './serviceWorker';
+import "./index.css";
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
+
+그리고 logo.svg, serviceWorker, index.css, App.test.js, App.css 다지움 
+
+그리고 App.js로 이동하여, 아래코드 삭제
+
+import logo from './logo.svg'; 
+import "./App.css";
+
+그리고 App()함수안에 header부분과 안에 내용다지움.
+
+function App() {
+  return <div>Hello!!</div>;
+}
+
+다음과같이 입력하고 저장하면 localhost:3000에 바로 반응한다 
+
+나는 Hello라 입력했고 브라우저에서 inspect하면 <div id="root"> <div> hello </div> </div>로
+
+root안에 hello가 있지만. 내코드 index.html로 와서 보면 root안에 아무것도 없다.
+
+아제 우리가 react가 어떻게 동작하는지 이야기 해볼건데, react가 무엇이냐면, react는 당신이 거기에 쓰는 모든 요소를 생성한다는 것이다.
+
+자바스크립트와 함께 그것들을 만들고 그것들을 HTML로 밀어넣음 
+
+React는 <div id="root"></div> 이곳에 element를 넣는 역할을 담당한다.
+
+나의 모든 react application을 div사이에 넣음.
+
+ReactDOM.render(<App />, document.getElementById("root")); 이거때문에 그렇게되는거임 
+
+만약 div의 id를 potato로 바꾸면 에러가뜸 위의 getElementById를 potato로 해주면 정상작동함.
+
+이게 react.js의 작동방식임. 
+
+react는 소스코드에 처음부터 HTML을 넣지않고, HTML에서 HTML을 추가하거나 제거하는 법을 알고 있음.
+
+그래서 application이 이것을 로드 할때, 빈 HTML을 로드하게되고, 그런 다음 react가 HTML을 밀어넣게 됨. 내가 component에 작성해뒀던 것들을.
+
+우리가 방금 작성한것처럼 root에 div를 넣는 형식. 이게 react 작동방식임.
+
+virtual DOM이라는게 있음 virtual document object model ( 버츄얼, 존재하지않는다는 소리임 )
+
+=======================================#1 END=====================================
+
