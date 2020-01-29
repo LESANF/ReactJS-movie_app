@@ -1,0 +1,75 @@
+ReactDOM.render(<App />, document.getElementById("root"));
+
+여기서 <App />를 보자. 기본적으로 이것을 컴포넌트( component )라 부름.
+
+그리고 react는 component와 함께 동작한다. 모든 것은 component임.
+
+나는 컴포넌트를 만들게 될거고, 컴포넌트를 보기 좋게 만들것이다. 그리고 컴포넌트가 data를 보여주게 할거임.
+
+기본적으로 컴포넌트는 HTML을 반환하는 함수임.
+
+내가 작성한것처럼 function App() { reutrn ~~ }을 가지고있고 이것은 HTML을 반환할거임
+
+<App /> 이부분이 우리가 컴포넌트를 사용하고자 할 때, 컴포넌트의 형태임.
+
+ReactDOM.render(App, document.getElementById("root")); 이런식으로 사용할 수 없음.
+
+이건 react로 동작하지 않기 때문.
+
+react는 컴포넌트를 사용해서 HTML처럼 작성하려는 경우에 필요함.
+
+JS와 HTML 사이의 이런 조합을 JSX라고 한다. 이건 react에서 나온 매우 custom한 유일한 개념임.
+
+JSX는 내가 vue나 angular등 다른 분야로가면 통하지않음. 내가 react에 있는다면 jsx는 JS위에서 배워야할 유일한 것임.
+
+컴포넌트를 만드는 방법은 간단함. 만들어보자
+
+src폴더에 Potato.js파일 생성
+
+내가 컴포넌트를 작성할 때 마다 import React from "react";를 써줘야함.
+
+이걸 import하지않으면 react는 여기에 jsx가 있는 컴포넌트를 사용하는 것을 이해못함.
+
+function Potato() {
+  return <h1>I love Potato</h1>;
+}
+
+함수를 만들때 potato처럼 소문자로 시작하면안됨 대문자로 만들어주자 
+
+컴포넌트를 생성하면 주의하라고 메시지를줌. VSC는 말해준다 나에게 이 Potato는 선언되었지만 아무도 사용하지않는다고
+
+potato를 export해야하기 때문 사용하려면 export해야함 export default Potato해줌. 
+
+컴포넌트를 만들었고 사용하기위해 export까지했음
+
+index.js로 돌아와서 import Potato from "./Potato"; 하고 ReactDOM.render(<App /><Potato/>, document.getElementById("root")); 해보자.
+
+될거같지만 안됨 !
+
+이유는 react application이 하나의 컴포넌트만을 rendering 해야되기 때문임 그 컴포넌트가 여기선 App임 이를 해결하는 방법은 간단함
+
+우리는 하나의 컴포넌트만을 렌더링해야하고 그건 App임 그럼 Potato를 App안으로 넣으면됨.
+
+App.js에 import Potato from "./Potato"; 해주고 <Potato/>를 넣는다. return 되는 HTML안에.
+
+function App() {
+  return (
+    <div>
+      <h1>hello</h1>
+      <Potato />
+    </div>
+  );
+}
+
+이런식으로 넣음. 정상적으로 작동한다. hello 아래에 <Potato/>를 사용했고
+
+hello
+I love Potato로 브라우저에 결과가나온다.
+
+react는 컴포넌트를 가져와서 브라우저가 이해할 수 있는 평범한 일반 HTML로 만들었다.
+
+jsx는 JS안의 HTML임. 내가 만들고 싶은 만큼 컴포넌트를 만들 수 있고 많은 컴포넌트를 return할 수 있다.
+
+주의해야 할점은 react application은 하나의 컴포넌트만 렌더링 할 수 있음 App 처럼
+
+==========================#2.0 END======================================
