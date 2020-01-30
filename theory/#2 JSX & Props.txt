@@ -73,3 +73,99 @@ jsx는 JS안의 HTML임. 내가 만들고 싶은 만큼 컴포넌트를 만들 �
 주의해야 할점은 react application은 하나의 컴포넌트만 렌더링 할 수 있음 App 처럼
 
 ==========================#2.0 END======================================
+
+app.js에서 작업을 하자, file을 이동하면서 하고 싶지 않기때문.
+
+기존 potato파일과 app.js에서 import한 potato를 지우자
+
+app.js에서 Potato 컴포넌트를 선언하자. 잘돌아감.
+
+jsx에서 이해해야 하는것은 컴포넌트에 정보를 보낼 수 있다는 점임.
+
+react가 좋은 이유는 재사용 가능한 컴포넌트를 만들 수 있다는 점임. 컴포넌트를 계속해서 반복 사용할 수 있음.
+
+컴포넌트에서 컴포넌트로. child component로 정보를 보내보자.
+
+function Food() {
+  return <h2>I like potato</h2>;
+}
+
+function App() {
+  return (
+    <div>
+      <h1>hello</h1>
+      <Food />
+    </div>
+  );
+}
+--------------------------- 코드를 보면서 설명함.
+
+function App() 즉 application에서 food 컴포넌트로 정보를 보내고 그런 다음에 
+
+food 컴포넌트에서 그 정보를 어떻게 사용하지에 대해서 설명할거임.
+
+<Food />에 정보를 넣어보자 fav="kimchi" 같이 그럼 <Food fav="kimchi"> 가됨.
+
+이게 Food 컴포넌트에 정보를 보내는 방법임. 지금은 fav="kimchi"로 정보를 보낸상태지만, 사용하지않았음 아직.
+
+react 첫 개념중 하나다. 저런식으로 컴포넌트에 정보를 보낸것은
+
+Food component에 kimchi라는 value로 prop fav를 준거임. 
+
+즉 Food 컴포넌트에 fav라는 이름의 property(props)를 kimchi라는 value로 준것.
+
+value를 줄때 "kimchi"와 같이 String, boolean(true, false), number, array등 아무거나 원하는걸 줄 수 있음.
+
+father component(부모 컴포넌트)에서 children component(자식 컴포넌트)로 원하는 많은 props를 보낼 수 있음.
+
+다음과같이 value를 Food 컴포넌트에 보내면, 이것을 Food 컴포넌트의 인자로 써서 받을거임 function Food(props)로
+
+props에는 우리가 보낸 value들이 전부 들어있다.
+
+이러한 것들을 사용하기위해 우리는 create-react-app이 필요하다.
+
+props에 여러가지 정보들이 들어있다 그것들은 객체로 들어있음 {} 
+
+이제 인자에서 props를 작성하는 법을 알아보자. 우리는 fav라는 이름의 value(kimchi)를 props에 보냈음. 
+
+props.fav를 콘솔에 찍으면 kimchi를 출력함. 앞서 말했듯이 props는 객체임. 
+
+console.log(props); -> {fav : "kimchi"}
+console.log(props.fav); -> kimchi
+
+이제 props에 어떻게 들어있는지 안다.
+
+function Food(props) 가아닌 function Food({ fav }) 를 인자로 줘보자. 
+
+props object(객체) 내부에는 fav가있음. 이렇게 {fav}를 인자로 주는방법이 내가 내부에서 바로 얻는방법임.
+
+props.fav 또는 {} 내부의 fav를 쓰는것은 같은거다.
+
+인자를 받았으니 사용해보자 return에   return <h2>I like {fav}</h2>; 를 해주면 I like kimchi 가 성공적으로 브라우저에 표시된다.
+
+function Food(props)로 인자를 주면
+
+return <h2>I like {props.fav}</h2>; 로도 I like kimchi를 뽑을 수 이씀.
+
+<div>
+      <h1>hello</h1>
+      <Food fav="kimchi" />
+</div>
+
+현재 App의 내부는 위와같고
+
+<div>
+      <h1>hello</h1>
+      <Food fav="kimchi" />
+      <Food fav="potato" />
+      <Food fav="apple" />
+</div>
+
+이렇게 추가해주면 다 출력됨. jsx+props로 재사용하고있음
+
+Food컴포넌트로 kimchi, potato, apple같은 정보를 보내고. 컴포넌트에서 브라우저로 뿌려주는거임.
+
+<div></div>로 하나에 담아서 보내는 이유는 우리는 하나만 return 할 수 있음. 결국 function App은 부모컴포넌트로서 return하는거임.
+
+==========================#2.1 END======================================
+
