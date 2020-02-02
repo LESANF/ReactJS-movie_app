@@ -1,0 +1,146 @@
+state를 다뤄보자 앞선 예제들은 끝임.
+
+앞선 fooILike 배열은 예제를위해 데이터를 직접 붙여넣은거임
+
+state는 보통 우리가 동적데이터와 함께 작업할 때 만들어짐. 변하는데이터, 존재하지 않는 데이터
+
+동적인 데이터(dynamic data)를 돕는건 state임.
+
+기존의 App(function component)를 class component로 변경하자.
+
+class App extends React.Component {} 이렇게 바꿈. 이렇게 선언하는거 자체가 기본이고 이 단계는 필수임.
+
+react component는 뒤에 많은 것을 가지고 있음. 그중 할게 지금 state임.
+
+그리고 매번 우리가 컴포넌트를 만들 때마다 모든 것을 다 구현하고 싶지 않음. extend from한 이유가 이거다.
+
+예를들어서, 아기는 사람에서 확장되고, 사람으로부터 모든 것(특징)을 가져올 수 있고 그것으로부터 확장되는거임.
+
+삼성은 모바일폰 class에서 확장된거다. 내가 만약 비디오게임을 개발한다면 삼성을 프로그래밍하지 않고, 모바일폰을 프로그래밍해야된다.
+
+모바일폰(cell phone)는 많은 특성들을 가지고있다. 예를 들어 screen, camera, charger등등 아이폰이나, 삼성은 이러한 것을 공유함.
+
+나는 camera, screen, charger를 cell phone class에 넣은다음 cell phone에서 확장한 samsung class를 가지게 된다.
+
+그러면 samsung class는 cell phone class로 부터 모든것을 가져오게 됨.
+
+우리가 하는건 react class component에서 가져 오고있음. 우리는 거기서 확장하고있음 
+
+우리의 App component는 react component임. react component는 return을 가지고있지않음. function(함수)가아니기 때문 !
+
+render method를 가지고있고 App component에 들어있음. 왜 ? react component에서 확장했으니까.
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>Im a Class Component</h1>
+      </div>
+    );
+  }
+}
+
+다음과같이 작성하면 정상적으로 작동함.
+
+클래스와 함수사이는 차이가 있음.
+
+함수 - function component는 function이고 뭔가를 return함. 그리고 screen에 표시된다.
+클래스- class component는 class지만, react component부터 확장되고 screen에 표시된다 그리고 render method안에 넣어써야함.
+
+* React는 자동적으로 모든 class component의 render method를 실행하고자한다.
+
+함수, 클래스중 왜 클래스를 쓰냐면 class component가 가진 우리가 원하는 state 때문임.
+
+state= {}, state는 객체임. class component안에 넣어쓰면됨. 콤포넌트의 데이터를 넣을 공간이있고 이 데이터는 변한다.
+
+데이터는 계속 변할꺼고 이게 내가 state를 사용하는 이유임.
+
+state = {
+    count: 0
+  };
+
+선언하자 class App component에. 내가 바꿀 데이터를 state에 넣자 count를 바꿀거임.
+
+state를 render()안에 넣으려면 {this.state} 이런식으로 쓰면됨. 
+
+<h1>The count is : {this.state.count}</h1> 이렇게 써줄꺼임. 그이유는 class이기때문.
+
+state가 class component에 있어서 우리는 this.state를 할필요가있음.
+
+<div>
+        <h1>The number is : {this.state.count}</h1>
+        <button>Add</button>
+        <button>Minus</button>
+</div>
+
+이렇게 render()해주자.
+
+react.js는 javaScript임. 우리는 JS를 쓸 수 있음.
+
+JS코드로 2개의 함수를 App class component안에 작성해보자.
+
+Add = () => {
+    console.log("Add");
+  };
+  Minus = () => {
+    console.log("Add");
+  };
+
+함수선언에 왜 함수명 앞에 const를 안붙이냐고 할 수 있을껀데 그 이유는 클래스 내부에 작성하는거라 const가 필요없음!
+
+그리고 생성한 버튼에는 onClick이라는 prop이 기본적으로 있음.
+
+JS에서는 onClick이나 eventListener를 등록해야하지만 react에서는 자동적으로 주어진 onClick을 가지고있음.
+
+<button onClick={this.Add}>Add</button>
+<button onClick={this.Minus}>Minus</button>
+
+this.Add()를 하지않는이유는. 즉시 실행하는게 아니라서그럼. 우리는 버튼을 눌렀을때 Add나 Minus함수가 실행되길원함 그래서 안붙임.
+
+=========================#3.0 END===========================
+
+이제 state를 업데이트 해보자.
+
+Add함수에 this.state.count = 1; 이런식으로 하면안됨. 절대로 state를 직접 변경하면안된다. 이렇게해도 작동안함.
+
+작동이 안하는이유는. redner() 함수가 refresh하지 않기 때문임 state의 값이 바뀌어도 render()를 refresh하지 않는이상 screen에 표시안됨.
+
+그럼 정답은 매번 state의 상태를 변경할 때 react가 render function을 호출해서 바꿔줘야 된다는 말임.
+
+setState function을 통해 해결할 수 있음. react는 똑똑해서 setState를 호출할지 알고 view를 refesh하길 원하는것 또한 알고
+
+render function을 refresh하길 원하는것 또한 안다.
+
+나는 내 state를 바꾸고 싶지만 또한 react가 어떤 것이든 refresh해주길 원함.
+
+함수내용을 this.setState로하고 setState는 새로운 State를 취해야함. this.setState({ count: 1 }); 이런식으로.
+
+state는 object(객쳬)니까 이렇게 주는거임.
+
+react는 내가 setState를 호출하면 react는 state를 refresh하고 또한 render function을 호출함 !
+
+react는 변화가 있는 부분만 업데이트함. 그리고 react는 모든걸 다시 칠하지만 virtual DOM을 가지고 있기때문에 매우빠르게 변경할 수 있고 깜빡거리지도않음.
+
+버튼을 누를때마다 state는 업데이트되고 또한 render function을 다시 호출하고있음.
+
+this.setState({ count: this.state.count + 1 }); 이렇게 바꿔주면 정상적으로 state가 0에서 1,2,3,4로 증가되는걸 볼 수 있음.
+
+하지만 이건 좋은코드가아님 몇가지 성능 문제가 나중에 있음. 이 state에 의존하는건 좋지않음.
+
+react는 똑똑하기 때문에 현재 state를 가져올 수 있음 current()함수를 통해
+
+ Add = () => {
+    this.setState(current => ({
+      count: current.count + 1
+    }));
+  };
+
+이런식으로 바꿀 수 있음. current.count+1 이것이 state를 set할 때, react에서 외부의 상태에 의존하지 않는 가장 좋은 방법임.
+
+this.state.count같은 것보다 나는 현재 state를 얻고싶 기때문에 current를 씀 react는 그것을 나에게 준다.
+
+이런방식이 19년도이후 최신방식임.
+
+* 매 순간 내가 set State를 호출할 때 마다, react는 새로운 state와 함께 render function을 호출 한다. (setState를 썼을때만 !)
+
+=========================#3.1 END===========================
