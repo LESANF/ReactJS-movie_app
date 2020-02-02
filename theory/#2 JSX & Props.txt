@@ -195,3 +195,78 @@ Food 컴포넌트로 보냈으니 props를 전달하자. {name, picture}로 받�
 정보를 받았으니 위와같이 씀. 정상적으로 5개의 name, picture(img)가 출력됨.
 
 ==========================#2.2 END======================================
+
+{foodILike.map(dish => (<Food name={dish.name} picture={dish.image} />))} 이방법은
+
+{foodILike.map(renderFood)} 이방법과 같다. 바깥에 renderFood함수를 만들었음.
+
+const renderFood = dish => {
+  return <Food name={dish.name} picture={dish.image} />;
+};
+----------------------------------------------------------------------------------------
+
+위와같이 두가지 방법이 있다는걸 알기위해 작성해봄
+
+브라우저로와서 콘솔로들어가보면 Warning: Each child in a list should have a unique "key" prop. 다음과같은 에러를 얻음.
+
+list내의 child는 unique한 keydrop을 가져야된다고 말하고있음.
+
+이 말은 모든 react의 element들은 유일해야함. foodILike 배열에 각 객체마다 id:1 이런식으로 id를 부여해주자.
+
+react의 모든 element들은 다르게 보일 필요가있음. 지금은 모든 element들이 같아보임
+
+우리는 name과 imamge가 다다른걸 알고있지만 react는 똑똑하지 않기때문에 알려줘야함.
+
+그래서 나는 Food 컴포넌트에 prop을 줄거임. 에러에서 보이듯이 그 prop은 "key"임.
+
+Food 컴포넌트에 key={dish.id}로 키를 넣어주자. 에러가 없어짐.
+
+의아할부분이 생긴다 Food 컴포넌트를보면 key를 인자로 부르지않음. 이말은 key를 사용하지 않고있다는 말임.
+
+그 이유는 기본적으로 react 내부에서 사용하기 위해서 그런거임.
+
+==========================#2.3 END======================================
+
+우리는 부모 컴포넌트로부터 props를 전달받을때 우리가 예상한 props인지 점검할 필요가있음 ( 우리의경우 App에서 Food )
+
+리스트에 rating을 추가시켜보자 number형태로. 
+
+그리고 prop types를 설치해보자.
+
+우리는 코드를 작성하면서  실수를할 수 있고, Food 컴포넌트는 다른 file에 있을 수 도있고, picture를 실수로 imgae로 보낼 수있는 실수.
+
+prop-types는 그런것들을 실수라고 말해줌. 
+
+설치를했으니 import하자. import PropTypes from "prop-types"
+
+그리고 Food 컴포넌트에 prop-types를 추가하자.
+
+Food.propTypes = {} 이런식으로. 중괄호{}안에는 props에 대한 설명을 적을거임.
+
+Food.propTypes에 가서 props를 체크하자.
+
+Food.propTypes = {
+  name: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
+  rating: PropTypes.string.isRequired
+};
+
+이런식으로 Food 컴포넌트가 받는 props를 검사하는데 사이트는 정상적으로 작동함. 
+
+console로 가보면, index.js:1 Warning: Failed prop type: Invalid prop `rating` of type `number` supplied to `Food`, expected `string`
+
+에러를 받음. rating은 숫자임 하지만 propTypes에서 나는 PropTypes.string.isrequired로 했기때문에 알려주는거임 
+
+정상적으로 바꾸려면 PropTypes.number로 바꿔주면 에러가사라짐.
+
+많은 것들을 PropTypes로 체크할 수 있음 string, number, array, boolean, object가 있는지 없는지...
+
+isRequired처럼 반드시 체크할 필요는없음. List의 5개의 객체안에서 몇개의 rating을 지워보자.
+
+성공적으로 작동하고 에러또한없음. rating: PropTypes.number 
+
+우리는 Food rating이 number여야 한다고했지만, 필수는 아니라고 했기때문 이뜻은 number or undefined임.
+
+이해가안된다면 PropTypes.number.required로하면 undefined는 안된다고 에러를 띄움 콘솔창에서.
+
+==========================#2.4 END======================================
