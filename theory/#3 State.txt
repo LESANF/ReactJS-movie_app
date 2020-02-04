@@ -144,3 +144,56 @@ this.state.count같은 것보다 나는 현재 state를 얻고싶 기때문에 c
 * 매 순간 내가 set State를 호출할 때 마다, react는 새로운 state와 함께 render function을 호출 한다. (setState를 썼을때만 !)
 
 =========================#3.1 END===========================
+
+react class component는 단순히 render말고 더 많은걸 가지고 있음.
+
+life cycle method를 가지는데, life cycle method는 기본적으로 react가 component를 생성하고 그리고 없애는 방법임.
+
+컴포넌트가 생성 될 때, render 전에 호출되는 몇가지 function 들이있음.
+
+컴포넌트가 render 된 후, 호출되는 다른 function 들이 존재함.
+
+만약내가 add를 클릭하고 +1이되면, 컴포넌트가 업데이트 될 때, 호출되는 다른 function이 있음.
+
+< Mounting >, < Updating >, < Unmounting >
+
+mounting은 태어나는 것과 같고, Updating은 업데이트되는거, Unmounting은 컴포넌트가 죽는걸 의미함.
+
+컴포넌트가 죽는다는 의미는, 페이지를 바꿀 때임, state를 사용해서 컴포넌트를 교체하기도 하고, 컴포넌트가 죽는데는 다양한 방법이 있다.
+
+< Mounting >
+
+먼저 호출되는 function이 하나 있음. constructor임 constructor는 react에서 오지 않았음. JavaScript에서 class를 만들 때 호출되는거임.
+
+Constructor(){}를 가지고 있을 때 Constructor가 먼저 읽히고나서 render가 힑임. Contructor -> render
+
+컴포넌트가 mount될 때, 컴포넌트가 screen에 표시될 때, 컴포넌트가 나의 website에 갈 때, consturctor를 호출함. 그리고 나서 render임. 
+
+이 후, 컴포넌트가 render할 때, componentDidMount됨. 
+
+기본적으로 이건 나한테 알려준다 이 컴포넌트는 처음 render 됐다고. render -> componentDidMount
+
+
+< Updating >
+
+업데이트의 원인은 나임. 내가 Add, Minus를 클릭해서 state를 변경할 때, 그게 업데이트임.
+
+업데이트는 내가 setState를 호출할 때 마다 발생함. 
+
+render가 발생하고 componentDidUpdate가 발생함. render -> componentDidUpdate
+
+add함수를 누르면 render하고 그다음 componentDidUpdate가 읽힘.
+
+따라서, setState를 호출하면, 컴포넌트를 호출하고, 먼저 render를 호출한 다음 업데이트가 완료되었다고 말하면 componentDidUpdate가 실행됨.
+
+
+< Unmount >
+
+이건 컴포넌트가 죽을 때임. componentWillUnmount를 호출할 수 있음.
+
+componentWillUnmount는 component가 떠날 때 호출됨. 내가 어떤걸 하거나 다른 페이지로 갈 때 처럼.
+
+=========================#3.2 END===========================
+
+
+
