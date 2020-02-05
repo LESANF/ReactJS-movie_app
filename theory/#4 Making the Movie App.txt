@@ -1,0 +1,64 @@
+일반적으로 사람들이 JavaScript에서 data를 가져오는 방법은 fetch를 사용하는거임.
+
+fetch보단 더좋은 방법이있음 axios, axios는 fetch위에 있는 작은 layer느낌이다. 땅콩 주우의 멋진 초콜릿 같은 느낌 ?
+
+사용하려면 설치해야함 npm i axios.
+
+우리가 쓸 API대해서 알아보자. 우리는 YTS에서 만든 API를 활용할거임. ( https://yts.mx/api )
+-> https://yts.mx/api/v2/list_movies.json ( 이주소는 YTS에서 제공하지만 불법적인 사이트라 계속 URL이 바뀔거임 사용하면 안됨 )
+
+https://yts-proxy.now.sh/list_movies.json 이걸 쓰자.
+
+많은 엔드포인트가 있지만 우리는 List Movies를 쓸거임. 
+
+axios를 사용하자 impot.
+
+componentDidMount에 this.getMovies(); 함수를 넣자.  
+
+getMovies()함수는 비동기식으로 진행됨 axios는 빠르지 않아서 기다려줘야함.
+
+axios로 url을 가져올때는 axios.get("")으로 가져옴. 가져와서 const moives에 담자.
+
+inspect로가서 네트워크에보면 status200으로 성공적으로 뜨고 요청하고있는거임. 하지만 우린 아무것도 안하고있음.
+
+앞으로 우리가 해야할건 data를 잡는부분임. axios로 받아온건 영화에대한 정보가담겨져있는 객체들임. 
+
+data를잡아야 state에 사용할 수 있음.
+
+--------------* 정리 *------------
+
+import React from "react";
+import axios from "axios";
+
+class App extends React.Component {
+  state = {
+    isLoading: true,
+    moives: []
+  };
+
+  getMovies = async () => {
+    const moives = await axios.get("https://yts.mx/api/v2/list_movies.json");
+  };
+
+  componentDidMount() {
+    this.getMovies();
+  }
+
+  render() {
+    const { isLoading } = this.state;
+    return <div>{isLoading ? "TRUE" : "FALSE"}</div>;
+  }
+}
+
+export default App;
+
+=================code===============
+애플리케이션은 render함.
+
+처음에는 state에있는거 isLoading:true를. 그래서 삼항연산자로 했었을때 TRUE를 볼거고
+
+이제 애플리케이션이 mount된 후, 우리는 getMoives function을 호출할거임. 
+
+getMoives는 axios.get을 사용하지만 완료되기까지 시간이 조금 필요하기 때문에 async, await를 넣었음
+
+============================#4.0 END========================

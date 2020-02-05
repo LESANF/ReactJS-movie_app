@@ -193,7 +193,49 @@ add함수를 누르면 render하고 그다음 componentDidUpdate가 읽힘.
 
 componentWillUnmount는 component가 떠날 때 호출됨. 내가 어떤걸 하거나 다른 페이지로 갈 때 처럼.
 
+---------------------------------------------------------------------------------------------------------
+life Cycle에대해 보면 좋은 싸이트 http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+
 =========================#3.2 END===========================
 
+movie component를 구성해보자. 
 
+어플리케이션을 mount하자마자, 알다시피 mount는 생겨나는 것, 태어나는 것, 살아있는거임.
 
+state = {
+    isLoading: true
+  };
+
+이렇게 state에 isLoading:true라고 값을줌. 
+
+return <div>{isLoading ? "TRUE" : "FALSE"}</div>; 이렇게하면 동작하지않음.
+
+isLoading이아니라 this.state의 isLoading임. 이렇게 적는것보다 es6로 render()안에 선언을해줌
+
+const { isLoading } = this.state; 이렇게 isLoading을 this.state에서 뽑아 사용한거고
+
+이제 <div>{isLoading ? "TRUE" : "FALSE"}</div>; 이 동작함.
+
+rnder()가 호출되면 componentDidMount가 실행됨.
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ isLoading: false });
+    }, 2000);
+  }
+
+setTimeout을 써보자 이건 delay function임.
+
+this.setState를 이용하여 isLoading의 값을 바꿔주고 바뀐값은 2초후에 일어남 setTimeout에의해. 2000은 밀리세컨드로 2초라는뜻.
+
+이론적으로 우리가 할 일은 componentDidMount에서 data를 fetch(가져오다)하는거임.
+
+API로부터 data fetching이 완료되면, FASLE대신에 movie를 render하고 map을 만들고 movie를 render하는거임
+
+state에 movies:[] 빈배열을 주고 후에 배열에 채울거임.
+
+그리고 setState를 사용할떄 state안에 default값들을 선언할 필요는없지만 쓰는게 좋은습관임. 처음부터 선언할 필요는 없음 movies:[]같이
+
+미래에 있을 수도 있는 것에 대한거임. 이건 좋은습관
+
+=========================#3.3 END===========================
