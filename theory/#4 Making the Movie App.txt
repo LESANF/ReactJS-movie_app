@@ -156,3 +156,75 @@ function Movie({ id, year, title, summary, poster }) {
 {} 중괄호안에 선언된 것들은 props 내부의 요소들이라는 뜻임. 이제 정보를 받은 movie컴포넌트가 return하고 screen에 해당 정보가 뜬다.
 
 ============================#4.1 END========================
+
+HTML을 해보자. 일단 Movie컴포넌트로 정보를 넘길때 
+
+큰틀로 section로 잡고 그안에 div를 2개로 나눔 하나는 Loading... 나머지는 Moive컴포넌트에 보내는 영화정보
+
+<div class ="movies">안에 movies.map에대한 정보를 담아 보냄.
+
+Movie 컴포넌트로와서 큰 <div class="movie>에 이미지와 div(class="movie_data)로나누고 
+
+다시 div에 props정보로 받은 요소들을 태그를 사용하여 넣음.
+
+Movie.css, App.css 파일을 만들고 각각 js파일에 import해줌.
+
+https://github.com/nomadcoders/movie_app_2019/commit/1777ae1284fdfd0b60e18e84f46d952a0a7548c3 
+
+============================#4.2 END=========================
+
+장르를 추가해보자. movies객체 안에 genres가 있음. Movie컴포넌트에 넘길꺼고 
+
+Movie컴포넌트는 genres를 props로 사용할꺼임 App.js에서 map함수에서 genres={movie.genres}를 추가해주자.
+
+props에 들어갈거니 propTypes로 검사를해야함.   genres: PropTypes.arrayOf(PropTypes.string).isRequired
+
+장르는 배열안의 string으로 되어있기때문에 저렇게 선언한것. genres:["Action","Fantasy"].
+
+콘솔에 class에 대하여 에러가뜨는데 우리가 HTML에서 정확히는 JSX임. <section class=~~> 식으로 class를 붙여줬는데
+
+이 class는 class App extends React.Component 클래스 컴포넌트와 겹치기때문에 react가 혼동을함.
+
+그래서 JSX의 class를 className으로 모두 바꿔주자. 이렇게 바꿔도 브라우저에서 inspect했을때 class로 뜸.
+
+이제 genres를 Movie컴포넌트에 보냈으니 사용하자. genres는 배열임. map을 통해서 뽑아내야함.
+
+<ul className="genres">
+          {genres.map((genre, index) => (
+            <li key={index} className="genres__genre">
+              {genre}
+            </li>
+          ))}
+</ul>
+
+다음과같이 ul에 genres정보를 넣었음. 여기서 key에 대한 에러가뜨는데 우린 이걸 구별 해줄 수 있는걸 가지고있지않음.
+
+맵에 대한 item에는 각각의 key가 필요함
+
+앞선 id는 원래 객체에 구별할 수 있게 다른 id가 저장되있기때문에 가능했음.
+
+여기서 우린 map의 옵션을 쓸거임. 맵으로 return할 genre이름 다음 인자는 순서를 나타냄 0,1,2,3 이렇게
+
+index라고 안해도되고 아무렇게 이름만 넣어도됨 그냥 두번째 인자로 주면됨.
+
+============================#4.3 END=======================
+
+https://github.com/nomadcoders/movie_app_2019/commit/c0a3270f5824c2555e2621190c6307cbaefe0704
+
+css부분임 복사 + 붙여넣기함
+
+============================#4.4 END=======================
+
+summary에 대한 부분을 조금고치자. 영화의 summary(줄거리) 마다 길이가 달라서
+
+어느것은 길고 어느것은 짧게 보임. 이걸 통일시켜주거임. slice로
+
+summary.slice(0,180)으로 하면 처음부터 180의길이까지 잘라줌 (시작점, 끝점)
+
+Movie컴포넌트에서 summary를 받아 screen으로 처리하는거니 여기서 해야함.
+->  <p className="movie__summary">{summary.slice(0, 180)}...</p> 이렇게 처리.
+
+그리고 App.css / Movie.css에대한 부분을 다시나눴음 
+-> https://github.com/nomadcoders/movie_app_2019/commit/7d5cde6a4cecb6c21553f8273af30fe49e29861a
+
+===========================#4.5 END========================
