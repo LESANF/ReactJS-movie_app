@@ -62,3 +62,97 @@ export default App;
 getMoives는 axios.get을 사용하지만 완료되기까지 시간이 조금 필요하기 때문에 async, await를 넣었음
 
 ============================#4.0 END========================
+
+ getMovies = async () => {
+    const {
+      data: {
+        data: { movies }
+      }
+    } = await axios.get("https://yts.mx/api/v2/list_movies.json");
+
+    this.setState({ movies, isLoading: false }); // movies(기존 state) : movies(axios movies)
+  };
+
+getMovies의 함수에대한 내용을 보자.
+
+API로 받아온 영화객체는 data.data.movies이다. axois는 그렇게 빠르지않아 async, await형식으로 받아왔고.
+
+es6문법으로 data안의 data안의 movies로 선언했음.
+
+우리가 기존 state해놓은 movies: []와 const { data:{ data: {movies} } } = await axios.get("~~); 의 movies는 다른거임.
+
+this.setState로 동적이게 바꿔주자. movies : movies는 문법으로 줄여서 movies로 할 수 있음. 빈배열에 우리가 API에서 뽑아온 movies를 넣어준거임.
+
+그리고 삼항연산자로 movies가 true가 아닐 때 영화의 정보를 나타내야되니 isLoading또한 false로 바꿔준다.
+------------------------------------
+Movie에 대한 컴포넌트를 만들자. App.js에서 같이 만들어도 상관은 없으나. 분할정복하자 이런습관을 들이는게 좋음.
+
+Movie.js를 만들고 import React from "react"; 한다. 이부분은 필수다.
+
+props에 들어갈 타입들에대하여 검사해야하니 import PropTypes from "prop-types"; 도 쓴다.
+
+state를 쓰지않을거니까 class형이아닌 function형으로 만들자.
+
+Movie.prototype = {
+  id: PropTypes.number.isRequired,
+  year: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  summary: PropTypes.string.isRequired,
+  poster: PropTypes.string.isRequired
+};
+
+Movie에 대한 props 검사식임. 틀려도 실행은되나 console에 에러가뜸.
+
+function은 return이 있어야하고 class는 render()함수가 있어야함 기억하자.
+
+값을 컴포넌트에 보낸다음 컴포넌트에서 처리하는거다. 잊지말자.
+
+App.js로 이동하여 Movie컴포넌트를 추가하자. import Movie from "./Movie";
+
+이제 <Moive />를 쓸 수 있음. 즉 Movie컴포넌트에 값을 줄 수 있음.
+ 
+movies.map(moviesObj => (
+              <Movie
+                key={moviesObj.id}
+                title={moviesObj.title}
+                poster={moviesObj.medium_cover_image}
+              />
+            ))}
+
+다음과같이 값을 Movie 컴포넌트로 보낸다. map함수의 사용법을 알자.
+
+movies는 우리가 앞서 setState로 선언한 movies임. 즉 영화의 정보가 담긴 객체들이 배열형으로 있음.
+
+render()에서 const { isLoading, movies } = this.state; 다음과같이 선언한 이유는 {this.state.isLoading, this.state.movies} 이런식으로 지저분하게 선언하는걸 막기위함이다.
+
+<Movie /> 컴포넌트에 값을 보내주자. 
+
+key는 props로 보내줄꺼지만 쓰이지는 않는다. 구분할 요소가 있어야 되기 때문에 넣음 안넣으면 에러생김.
+
+key, title, poster로 값을 보낼거고 props의 이름은 아무거나해도된다. potatotitle, appleposter 이런식으로 해도됨. 정해진게아님.
+
+맵함수의 기본형식을 알아보자.
+
+배열명.map(반환 될 배열이름 => ( ) ) 
+
+우리의경우 사용할 배열은 영화의정보다 담긴 movies이고 반환 될 배열이름은 아무거나해도됨 이경우 moviesObj임.
+
+안에서 id, title, medium_cover_image는 movies배열 안에있는 데이터들이다. 객체의 요소들이라고 이해하면됨.
+
+map으로 해당 요소들을 뽑아 key, title, poster의 props명으로 선언하여 Movie컴포넌트에 값을준다.
+-------------------------------------------------------------
+function Movie({ id, year, title, summary, poster }) {
+  return (
+    <div>
+      <h3>{title}</h3> <img src={poster} />
+    </div>
+  );
+}
+
+다시 Movie.js로 돌아와 Movie 컴포넌트를 보자. Movie컴포넌트는 props로 id, year, title, summary, poster를 받음. 내가 직접 넣은거임
+
+컴포넌트에 props를 줄때 props만 써도되지만 안에서 사용할 때는 {props.title}, {props.poster} 이런식으로 써야된다 이것도 줄여 쓸 수 있음.
+
+{} 중괄호안에 선언된 것들은 props 내부의 요소들이라는 뜻임. 이제 정보를 받은 movie컴포넌트가 return하고 screen에 해당 정보가 뜬다.
+
+============================#4.1 END========================
