@@ -1,0 +1,29 @@
+좀더 인터렉션(상호작용)하게 만들어보자
+
+react-router-dom을 쓸거임. 이건 네비게이션을 만들어주는 패키지다.
+
+npm install react-router-dom
+
+화면이 더 넓을때 어떻게 하는지 구조를 보여주기위해 그리고 더많은 것들을하기위해 src에있는걸들을 정리해보자.
+
+src안에 components, routes폴더 2개생성.
+
+Movie.css, Movie.js를 components에 넣어주고 App.js에 Movie에 대한 경로를 다시 설정해주자.
+
+그리고 routes에 Home.js와 About.js를 생성
+
+우리는 두개의 라우터를 가지게 될거고 두개의 스크린개념임.
+
+첫번째 스크린은 영화설명이 될거고 두번째는 about페이지임.
+
+App.js를 라우터로 만들자 about.js로 가던가 home.js로 가던가 이런식으로
+
+기존의 내용을 복사해 Home.js로 넣자. App.css도 routes로 옮기고 Home.css로바꿈.
+
+App.js에는 함수형 컴포넌트를 만들거임.
+
+function App() {
+  return <span>something</span>;
+}
+
+여기에는 router를 넣을거고, 그건 react-router-dom이 있음 기본적으로 react를 보고 home.js랑 about.js를 보여주는거임.

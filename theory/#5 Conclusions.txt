@@ -1,0 +1,34 @@
+코드를 클라우드에 올려보자.
+
+gh-pages를 설치해야함. npm i gh-pages
+
+깃허브를 통해 static페이지를 나타낼 수 있고 프로젝트 이름이 페이지에 붙을거임.
+
+username.github.io/프로젝트이름
+
+package.JSON으로가서 homepage를 추가하자. 이부분은 필수임. gh-pages가 동작하는데 필요함.
+
+"homepage": "https://LESANF.github.io/ReactJS-movie_app/" 대소문자구분하자. 이걸 package.json에 꼭넣어야함
+
+script에도 아래와같이 넣어줘야함.
+
+"deploy": "gh-pages -d build",
+"predeploy": "npm run build"
+
+* 정리 *
+
+1. npm i gh-pages
+
+2. package.json으로 이동하여 homepage넣음.
+
+3. deploy, predeploy 두 명령어를 만듦.
+
+deploy는 build 폴더를 upload함. 그전에 먼저 npm run build로 build폴더를 얻자.
+
+내가 deploy를 먼저 호출하면, predeploy가 자동적으로 실행됨. 이름은 같아야함.
+
+npm run deploy하면 완료된거임.
+
+만약 업데이트 될게 있으면 수정하고 다시 npm run deploy해야함.
+
+=============================#5.0 END========================
