@@ -27,3 +27,75 @@ function App() {
 }
 
 여기에는 router를 넣을거고, 그건 react-router-dom이 있음 기본적으로 react를 보고 home.js랑 about.js를 보여주는거임.
+
+=============================#6.0 END========================
+
+라우터를 만들자 App에서 
+
+import { HashRouter, Route } from "react-router-dom";
+import About from "./routes/About";
+import Home from "./routes/Home";
+
+3가지 import.
+
+react-router-dom에서 HashRouter와 Route를 사용할거.
+
+About과 Home 컴포넌트도 사용함.
+
+HashRouter안에 Route를 쓸거고 Route에는 매우중요한 prop가 두 개 들어감.
+
+첫번째 prop은 렌더링할 스크린이고 두번째 prop은 뭘 할지 정해주는거임.
+
+    <HashRouter>
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/about" component={About} />
+    </HashRouter>
+
+path /about으로 들어가서 보여준다 {About}을.
+
+여기 두개의 Route가있는데 localhost:3000/#/about으로 들어가면, Home과 About이 같이 나타남.
+
+2개의 컴포넌트가 동시에 렌더링되는거임. 이게 리액트가 작동하는 방식임.
+
+<HashRouter>
+	<Route path='/'>
+		<h1>home</h1>
+	</Route>
+</HashRouter>
+
+이런식으로도 Route를 쓸 수 있음.
+
+경로가 겹친다면 리액트 라우터가 2개의 컴포넌트를 렌더함 
+
+겹친다는 말은 "/" 와 "/About". 두개의 path는 각각의 컴포넌트를 가지고있음
+
+locahost:3000/# ("/") 일경우 하나의 컴포넌트를 렌더하지만 localhost:3000/#/About이면 
+
+앞선 "/"가 렌더하는 컴포넌트와 /About의 컴포넌트가 둘다 동시에 렌더됨.
+
+다시한번 다른 예를 들어보자 /home과 /home/introduction이있음.
+
+/home/introduction으로 이동했을때. 리액트는 /home이 매치되었으니 이것도 렌더링하자고 받아들이고 계속 찾는다.
+
+/home/introductiondmf 찾았으니 또 렌더함 이게 2개의 컴포넌트를 갖게된 이유임.
+
+이걸 방지하기위해선 Route의 요소에 exact={true} 값을 넣어야함.
+
+<HashRouter>
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/about" component={About} />
+</HashRouter>
+
+이렇게하면 /about으로가도 겹쳐서 렌더되지않음.
+
+이것의 뜻은 나의 url이 "/"일때만 home을 렌더링해주는거임. 
+
+/about 일때 "/"의 경로가 포함되어있지만 오로지 "/"일때만 Home을 렌더됨.
+
+이제 2개의 컴포넌트를 따로 렌더링하게 되었음.
+
+========================#6.1 END======================
+
+
+
+
