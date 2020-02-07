@@ -96,6 +96,109 @@ locahost:3000/# ("/") 일경우 하나의 컴포넌트를 렌더하지만 localh
 
 ========================#6.1 END======================
 
+App.css 만들고 css추가됨.
+https://github.com/nomadcoders/movie_app_2019/commit/3ebfa6c16dd4ad07d1d58772cfb0ad08a958ec1e
 
+네비게이션은 home과 about에 넣어야함.
 
+Navigation 컴포넌트를 만들자. components -> Navigation.js 그리고 css도해야하니 Navigation.css
 
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Navigation.css";
+
+function Navigation() {
+  return (
+    <div className="nav">
+      <Link to="/">Home</Link>
+      <Link to="/about">about</Link>
+    </div>
+  );
+}
+
+이렇게 Navigation 컴포넌트를 작성함.
+
+Link를 쓰지한고 a로 HTML형식으로 해버리면 페이지가 새로고침됨. 리액트가 죽고 페이지자체를 새로고침 시켜버리기때문에 
+
+react-router-dom의 Link를 쓰는거임. href대신 to를 쓰면됨.
+
+주의해야 할점은 Router밖에서 네비게이션은 쓸 수 없다.
+
+<HashRouter> 
+	<Navigation />
+</HashRouter>
+
+는 가능하지만, ( Link는 라우터 안에 있어야한다. )
+
+<Navigation />
+<HashRouter>
+</HashRouter> 와같이 밖에서는 사용할 수 없음.
+
+HashRouter와 BrowserRouter의 차이는 거의 없지만 github page로 업로드할 때 골치아프기 때문에 Hash를 씀.
+
+========================#6.2 END======================
+
+route props라는걸 알아보자.
+
+About컴포넌트에 인자로 props를 찍고 console.log를 찍어보면, history, location, match, staticContext가있음. 이것들은 react-router에 의해 넣어짐.
+
+about 링크를 눌러서 우리는 정보를 보낼 수 있음 props를 about화면으로.
+
+우리가 movie를 클릭하면, movie 디테일 페이지로 갈껀데 우리는 모든 데이터를 보낼거임.
+
+https://reacttraining.com/react-router/web/api/Link 공식문서.
+
+<Link
+  to={{
+    pathname: "/courses",
+    search: "?sort=name",
+    hash: "#the-hash",
+    state: { fromDashboard: true }
+  }}
+/>
+
+우리의 to="~~"를 string으로 바꿀 수 있음.
+
+우리의 경우에는 pathname과 state를 정의할거임.
+
+영화를 누르면 Detail화면으로 넘어갈거임. Detail.js에 route props로 정보를 넘겨주자.
+
+그전에 App.js에 <Route path="/movie-detail" component={Detail} /> 경로를 만듦.
+
+Movie 컴포넌트에서 Link로div를감싸고 pathname과 state로 넘겨준다.
+
+========================#6.3 END======================
+
+우리는 링크를 통해 정보를 라우터에 보내고있음.
+
+location의 state에 링크를 통해 넘겨준 props를 확인할 수 있음. props -> location -> state.
+
+Link를 통해 Detail 들어와야만 ! location 정보를 받을 수 있음.
+
+그냥 직접적으로 URL을 치고 들어오면 정보를 받을 수 없음.
+
+일단 Detail 컴포넌트를 클래스 컴포넌트로 바꿈.
+
+경로를 :id로 바꿨음. :potato :apple 상관없음. :는 뒤에 id라는걸 구별할수있음.
+
+Movie.js에서 Link의 pathname또한 : `/movie/${id}`로 수정함. movie는 id라는 prop이있음.
+
+정리해보면 App.js에서 <Route path="/movie/:id" component={Detail} /> 해당 path로 갈때 Detail 컴포넌트로 이동하는거임.
+
+Movie의 props를 쓸 수 있는 이유는 route props때문임. Link로 props를 넘겨줬다 어디에 ? pathname: `/movie/${id}`로.
+
+그래서 Detail.js로와서 Detail 클래스 컴포넌트에 따라 처리됨.
+
+class쓰는이유는 state때문. 하지만 props는 해당 링크를 통해서 이동될때만 props가 넘어감.
+
+그에대한 방지로 만약 props가 undefined일때 history.push("/")를 이용하여 "/"로 이동.
+
+우리는 알아야한다 render다음 componentDidMount가 동작되는걸.
+
+먼저 클래스컴포넌트로와서 render가 실행됨. location.state정보가 올바르게 넘어왔으면 그대로 렌더할거고
+
+만약 링크를 타고오지않고 직접적으로 URL을 치고왔으면 일단 null을 리턴함 null을 리턴하지않으면 에러뜸 렌더할게없으니까.
+
+null을보내고 그다음 DidMount를 읽는데 여기서 location.state가 undefined니까 home으로 돌려보냄. 링크를타고 정상적으로 접근하란말임.
+
+========================#6.4 END======================
