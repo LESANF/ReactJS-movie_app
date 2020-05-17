@@ -6,4 +6,6 @@
 
 - 해당 `React.js`는 `Component` 형식이 아닌 함수형으로 작성
 
+## Result
+
 https://lesanf.github.io/ReactJS-movie_app/
